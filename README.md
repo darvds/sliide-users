@@ -17,7 +17,7 @@ Kotlin Multiplatform and a **100% shared Compose Multiplatform UI** for Android 
 | Compose Multiplatform shared UI | ✅ | Swift layer is ~30 lines hosting the shared `UIViewController` |
 | Clean Architecture (MVI), Ktor, Room KMP, Koin | ✅ | `:domain` / `:data` / `:composeApp` Gradle modules |
 | Offline support | ✅ | Room is the single source of truth; the app renders fully from cache |
-| Unit tests for shared ViewModels/logic | ✅ | 35+ tests: domain, data (MockEngine), ViewModel (virtual-time coroutines) |
+| Unit tests for shared ViewModels/logic | ✅ | 49 tests: domain, data (MockEngine), ViewModel (virtual-time coroutines) |
 | Dark mode, Material 3 | ✅ | Plus dynamic color (Material You) on Android 12+, brand palette elsewhere |
 
 ## Quick start
