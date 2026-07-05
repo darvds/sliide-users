@@ -195,6 +195,14 @@ private fun AdaptiveFeed(
                 highlightSelection = false,
                 modifier = Modifier.fillMaxSize(),
             )
+            // Compact mode: tapping a user opens detail as a sheet, so no
+            // interaction is ever a dead end on any form factor.
+            state.selectedUser?.let { user ->
+                UserDetailSheet(
+                    user = user,
+                    onDismiss = { onIntent(UserFeedIntent.ClearSelection) },
+                )
+            }
         }
     }
 }
