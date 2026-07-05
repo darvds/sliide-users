@@ -242,7 +242,9 @@ class UserFeedViewModel(
     )
 
     private companion object {
-        const val UNDO_TIMEOUT_MILLIS = 5_000L
+        /** Matches Material3 SnackbarDuration.Short (4s) so the Undo action
+         *  is visible for exactly as long as the undo window is open. */
+        const val UNDO_TIMEOUT_MILLIS = 4_000L
         const val CLOCK_TICK_MILLIS = 60_000L
 
         fun initialsOf(name: String): String =

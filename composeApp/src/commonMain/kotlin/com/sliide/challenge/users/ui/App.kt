@@ -1,18 +1,16 @@
 package com.sliide.challenge.users.ui
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import com.sliide.challenge.users.ui.feed.UserFeedRoute
+import com.sliide.challenge.users.ui.theme.AppTheme
 
-/**
- * Root of the shared UI. Placeholder until the feed feature lands.
- */
+/** Root of the 100% shared UI. */
 @Composable
 fun App() {
-    MaterialTheme {
+    AppTheme {
         Surface {
-            Text("SliideUsers — scaffold")
+            UserFeedRoute()
         }
     }
 }
