@@ -77,6 +77,8 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.ktor.client.okhttp)
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.android) // androidContext() in platformDataModule
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
