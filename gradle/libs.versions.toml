@@ -4,18 +4,24 @@
 # (google/ksp#2964) that would put Room's compiler at risk.
 kotlin = "2.3.20"
 ksp = "2.3.9"
+# AGP 8.12 held deliberately: AGP 9.x is a breaking major with KMP plugin
+# interactions; 8.12 + Gradle 9.3.1 is a verified-working pairing.
 agp = "8.12.0"
 composeMultiplatform = "1.11.1"
 
-# Libraries
-kotlinxCoroutines = "1.10.2"
-kotlinxSerializationJson = "1.9.0"
+# Libraries — everything below is latest stable as of 2026-07 unless a hold
+# is commented.
+kotlinxCoroutines = "1.11.0"
+kotlinxSerializationJson = "1.10.0"
 ktor = "3.5.0"
 koinBom = "4.1.1"
+# Room 2.8.4 held deliberately: Room 3.0.0 shipped 2026-07-01 as a breaking
+# rewrite (new androidx.room3 package) — too fresh to bet a deadline on.
 room = "2.8.4"
 sqlite = "2.6.1"
-lifecycle = "2.9.1"
-activityCompose = "1.10.1"
+# lifecycle 2.11 is still beta; 2.10.0 is the current stable.
+lifecycle = "2.10.0"
+activityCompose = "1.13.0"
 turbine = "1.2.1"
 # material-icons-core froze at 1.7.3 when icons moved out of the main Compose
 # distribution; it remains the canonical multiplatform icon artifact.
