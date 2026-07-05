@@ -139,7 +139,7 @@ class UserFeedViewModel(
 
     // -- add user ---------------------------------------------------------------
 
-    private inline fun updateForm(reduce: AddUserFormState.() -> AddUserFormState) {
+    private inline fun updateForm(crossinline reduce: AddUserFormState.() -> AddUserFormState) {
         setState { copy(addForm = addForm?.reduce()) }
     }
 
