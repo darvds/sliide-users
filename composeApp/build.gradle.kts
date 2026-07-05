@@ -20,8 +20,8 @@ kotlin {
         }
     }
 
+    // No iosX64 — see :domain (CMP 1.11 dropped Apple x86_64 targets).
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
     ).forEach { iosTarget ->

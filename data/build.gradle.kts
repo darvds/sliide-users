@@ -54,7 +54,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-    iosX64()
+    // No iosX64 — see :domain (CMP 1.11 dropped Apple x86_64 targets).
     iosArm64()
     iosSimulatorArm64()
 
@@ -110,7 +110,6 @@ room {
 
 dependencies {
     add("kspAndroid", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
 }

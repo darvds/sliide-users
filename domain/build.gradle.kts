@@ -15,7 +15,8 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_17)
         }
     }
-    iosX64()
+    // No iosX64: Compose Multiplatform 1.11 dropped Apple x86_64 targets
+    // (deprecated in Kotlin). Device = iosArm64, simulator = iosSimulatorArm64.
     iosArm64()
     iosSimulatorArm64()
 
