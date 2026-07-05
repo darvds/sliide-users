@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Transparent system bars; Compose draws everything, including behind
+         the status bar (edge-to-edge is enabled in MainActivity). -->
+    <style name="Theme.SliideUsers" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+</resources>

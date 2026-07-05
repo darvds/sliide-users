@@ -1,0 +1,8 @@
+# Copy this file to local.properties and fill in your values.
+# local.properties is gitignored — never commit secrets.
+
+# GoRest API token — create one for free at https://gorest.co.in (login -> API Tokens).
+# Required for POST (create user) and DELETE. The read-only feed works without it.
+gorest.token=YOUR_TOKEN_HERE
+
+# Android Studio will add sdk.dir automatically on first sync.

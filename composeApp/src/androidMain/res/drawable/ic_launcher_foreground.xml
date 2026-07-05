@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Two overlapping "user" glyphs -->
+    <group android:translateX="0" android:translateY="2">
+        <path
+            android:fillColor="#8AB4F8"
+            android:pathData="M44,42 m-8,0 a8,8 0 1,1 16,0 a8,8 0 1,1 -16,0" />
+        <path
+            android:fillColor="#8AB4F8"
+            android:pathData="M28,68 q0,-12 16,-12 q16,0 16,12 v4 h-32 z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M62,40 m-9,0 a9,9 0 1,1 18,0 a9,9 0 1,1 -18,0" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M44,70 q0,-14 18,-14 q18,0 18,14 v4 h-36 z" />
+    </group>
+</vector>
