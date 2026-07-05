@@ -13,7 +13,7 @@ Kotlin Multiplatform and a **100% shared Compose Multiplatform UI** for Android 
 | FAB → polished **add-user form** | ✅ | Modal sheet, real-time validation, segmented gender/status, inline server errors |
 | **201 → appears at top immediately** | ✅ | Created rows are stamped newest-first in the local cache, which the UI observes |
 | Long-press delete + confirm + animation + **Undo snackbar** | ✅ | *Deferred delete*: the DELETE fires only after the undo window closes (see below) |
-| **Adaptive layout** | ✅ | <700 dp single list; ≥700 dp master–detail, selection self-clears on delete |
+| **Adaptive layout** | ✅ | <700 dp list + detail bottom sheet on tap; ≥700 dp master–detail side pane; selection self-clears on delete |
 | Compose Multiplatform shared UI | ✅ | Swift layer is ~30 lines hosting the shared `UIViewController` |
 | Clean Architecture (MVI), Ktor, Room KMP, Koin | ✅ | `:domain` / `:data` / `:composeApp` Gradle modules |
 | Offline support | ✅ | Room is the single source of truth; the app renders fully from cache |
