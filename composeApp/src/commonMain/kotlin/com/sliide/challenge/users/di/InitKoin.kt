@@ -1,6 +1,8 @@
 package com.sliide.challenge.users.di
 
+import com.sliide.challenge.users.data.di.dataModule
 import org.koin.core.context.startKoin
+import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 
 /**
@@ -14,5 +16,7 @@ fun initKoin(config: KoinAppDeclaration? = null) {
     }
 }
 
-/** Populated as layers land: data module, presentation module. */
-internal fun appModules() = emptyList<org.koin.core.module.Module>()
+internal fun appModules(): List<Module> = listOf(
+    dataModule,
+    presentationModule,
+)
