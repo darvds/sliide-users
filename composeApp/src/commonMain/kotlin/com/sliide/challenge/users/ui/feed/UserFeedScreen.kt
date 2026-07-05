@@ -5,7 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +35,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sliide.challenge.users.presentation.feed.UserFeedEffect
@@ -166,15 +168,22 @@ internal val UserFeedState.contentPhase: ContentPhase
 
 /**
  * Portrait/compact: single list. Landscape/tablet (>= 700dp): master-detail.
- * BoxWithConstraints keeps this decision local and dependency-free.
+ *
+ * The breakpoint reads LocalWindowInfo.containerSize (reactive window state)
+ * rather than BoxWithConstraints: local constraints can go stale on iOS
+ * rotation (JetBrains/compose-multiplatform#3215), and the pane decision
+ * should follow the window anyway.
  */
 @Composable
 private fun AdaptiveFeed(
     state: UserFeedState,
     onIntent: (UserFeedIntent) -> Unit,
 ) {
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        val twoPane = maxWidth >= TwoPaneBreakpoint
+    Box(Modifier.fillMaxSize()) {
+        val windowWidth = with(LocalDensity.current) {
+            LocalWindowInfo.current.containerSize.width.toDp()
+        }
+        val twoPane = windowWidth >= TwoPaneBreakpoint
         if (twoPane) {
             Row(Modifier.fillMaxSize()) {
                 UserList(

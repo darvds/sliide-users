@@ -99,10 +99,12 @@ Room 2.8.4 instead of the four-day-old Room 3.0.0. Rationale is commented in
 `gradle/libs.versions.toml`.
 
 **Small things done on purpose**: minSdk 26 so the launcher icon is a single
-adaptive vector (no binary PNGs in the repo); `BoxWithConstraints` breakpoint
-instead of the window-size-class artifact (one less dependency for one
-comparison); avatars are per-name gradient initials, so the feed has stable
-color identity without image loading.
+adaptive vector (no binary PNGs in the repo); the two-pane breakpoint reads
+`LocalWindowInfo.containerSize` instead of the window-size-class artifact or
+`BoxWithConstraints` — one less dependency, and local constraints can go
+stale on iOS rotation (compose-multiplatform#3215); avatars are per-name
+gradient initials, so the feed has stable color identity without image
+loading.
 
 ## Testing
 
