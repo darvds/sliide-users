@@ -35,6 +35,7 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class UserFeedViewModelTest {
 
     private class FakeUserRepository : UserRepository {
@@ -126,7 +127,8 @@ class UserFeedViewModelTest {
         val state = vm.state.value
         assertEquals(false, state.isInitialLoading)
         assertEquals(listOf(1L, 2L), state.users.map { it.id })
-        assertEquals("just now", state.users.first().relativeTime)
+        // Clock fixed at 120_000ms, firstSeen = 0 → two minutes of "age".
+        assertEquals("2 minutes ago", state.users.first().relativeTime)
         assertEquals("U", state.users.first().initials.take(1))
         assertEquals(1, repo.refreshCalls)
     }
