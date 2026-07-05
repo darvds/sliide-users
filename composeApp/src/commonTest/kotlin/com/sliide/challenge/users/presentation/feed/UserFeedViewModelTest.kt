@@ -80,6 +80,19 @@ class UserFeedViewModelTest {
 
     private var vm: UserFeedViewModel? = null
 
+    /**
+     * runTest drains all scheduled virtual-time work after the body returns;
+     * the ViewModel's infinite minute-ticker would make that drain spin
+     * forever. Cancelling the VM scope inside the body ends the ticker first.
+     */
+    private fun runVmTest(testBody: suspend TestScope.() -> Unit) = runTest {
+        try {
+            testBody()
+        } finally {
+            vm?.viewModelScope?.cancel()
+        }
+    }
+
     private fun TestScope.createVm(repo: FakeUserRepository, nowMillis: Long = 120_000): UserFeedViewModel {
         Dispatchers.setMain(StandardTestDispatcher(testScheduler))
         return UserFeedViewModel(
@@ -101,7 +114,7 @@ class UserFeedViewModelTest {
     // -- loading ------------------------------------------------------------
 
     @Test
-    fun `shimmer shows until first refresh lands, then content`() = runTest {
+    fun `shimmer shows until first refresh lands, then content`() = runVmTest {
         val repo = FakeUserRepository()
         val vm = createVm(repo)
 
@@ -119,7 +132,7 @@ class UserFeedViewModelTest {
     }
 
     @Test
-    fun `first load failure with empty cache is a full-screen error`() = runTest {
+    fun `first load failure with empty cache is a full-screen error`() = runVmTest {
         val repo = FakeUserRepository().apply {
             refreshResult = AppResult.Failure(AppError.Network)
         }
@@ -133,7 +146,7 @@ class UserFeedViewModelTest {
     }
 
     @Test
-    fun `refresh failure with cached content keeps content, flags stale, emits message`() = runTest {
+    fun `refresh failure with cached content keeps content, flags stale, emits message`() = runVmTest {
         val repo = FakeUserRepository()
         val vm = createVm(repo)
         runCurrent()
@@ -155,7 +168,7 @@ class UserFeedViewModelTest {
     }
 
     @Test
-    fun `retry from full-screen error recovers`() = runTest {
+    fun `retry from full-screen error recovers`() = runVmTest {
         val repo = FakeUserRepository().apply {
             refreshResult = AppResult.Failure(AppError.Network)
         }
@@ -176,7 +189,7 @@ class UserFeedViewModelTest {
     // -- add user -------------------------------------------------------------
 
     @Test
-    fun `name and email validate in real time, but empty fields stay quiet`() = runTest {
+    fun `name and email validate in real time, but empty fields stay quiet`() = runVmTest {
         val vm = createVm(FakeUserRepository())
         runCurrent()
 
@@ -199,7 +212,7 @@ class UserFeedViewModelTest {
     }
 
     @Test
-    fun `submit with invalid fields surfaces errors and never hits the repository`() = runTest {
+    fun `submit with invalid fields surfaces errors and never hits the repository`() = runVmTest {
         val repo = FakeUserRepository()
         val vm = createVm(repo)
         runCurrent()
@@ -214,7 +227,7 @@ class UserFeedViewModelTest {
     }
 
     @Test
-    fun `successful create closes the sheet, announces, and the user tops the feed`() = runTest {
+    fun `successful create closes the sheet, announces, and the user tops the feed`() = runVmTest {
         val repo = FakeUserRepository()
         val vm = createVm(repo)
         runCurrent()
@@ -238,7 +251,7 @@ class UserFeedViewModelTest {
     }
 
     @Test
-    fun `server-side 422 lands on the offending field`() = runTest {
+    fun `server-side 422 lands on the offending field`() = runVmTest {
         val repo = FakeUserRepository().apply {
             createResult = AppResult.Failure(
                 AppError.Validation(mapOf("email" to "has already been taken"))
@@ -261,7 +274,7 @@ class UserFeedViewModelTest {
     // -- delete + undo ----------------------------------------------------------
 
     @Test
-    fun `confirm hides immediately but defers the network delete`() = runTest {
+    fun `confirm hides immediately but defers the network delete`() = runVmTest {
         val repo = FakeUserRepository()
         val vm = createVm(repo)
         runCurrent()
@@ -281,7 +294,7 @@ class UserFeedViewModelTest {
     }
 
     @Test
-    fun `undo within the window cancels the delete entirely`() = runTest {
+    fun `undo within the window cancels the delete entirely`() = runVmTest {
         val repo = FakeUserRepository()
         val vm = createVm(repo)
         runCurrent()
@@ -302,7 +315,7 @@ class UserFeedViewModelTest {
     }
 
     @Test
-    fun `failed delete restores the row and explains`() = runTest {
+    fun `failed delete restores the row and explains`() = runVmTest {
         val repo = FakeUserRepository().apply {
             deleteResult = AppResult.Failure(AppError.Http(500))
         }
@@ -327,7 +340,7 @@ class UserFeedViewModelTest {
     }
 
     @Test
-    fun `long-press then dismiss leaves everything untouched`() = runTest {
+    fun `long-press then dismiss leaves everything untouched`() = runVmTest {
         val repo = FakeUserRepository()
         val vm = createVm(repo)
         runCurrent()
@@ -348,7 +361,7 @@ class UserFeedViewModelTest {
     // -- selection (master-detail) -------------------------------------------
 
     @Test
-    fun `selection follows the data - deleting the selected user clears the pane`() = runTest {
+    fun `selection follows the data - deleting the selected user clears the pane`() = runVmTest {
         val repo = FakeUserRepository()
         val vm = createVm(repo)
         runCurrent()
