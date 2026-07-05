@@ -2,7 +2,6 @@ package com.sliide.challenge.users.data.remote
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -33,10 +32,10 @@ internal fun createHttpClient(engine: HttpClientEngine = httpClientEngine()): Ht
                 }
             )
         }
-        install(HttpTimeout) {
-            connectTimeoutMillis = 10_000
-            requestTimeoutMillis = 30_000
-        }
+        // Timeouts are configured on the platform engines (see httpClientEngine
+        // actuals), NOT via the HttpTimeout plugin: the plugin's delay-based
+        // watchdog interacts badly with kotlinx-coroutines virtual time in
+        // runTest, instantly timing out MockEngine-backed tests.
         install(Logging) {
             level = LogLevel.INFO
         }
